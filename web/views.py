@@ -2,21 +2,32 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import response
 from django.http.response import HttpResponse
-from users.models import Profile,Address,Education,Experience,Skill,SkillItem
+from users.models import Profile,Address,Education,Experience,Skill,SkillItem,Client
 from web.models import Subscribe,Testimonial,Contact
-from works.models import Service, Project
+from works.models import Service, Project, Category
 
 
 # Create your views here.
 def index(request):
+    category = request.GET.get('category')
     profile = Profile.objects.get(user_id=1)
     skills = Skill.objects.filter(user_id=profile.pk)
     skill_items = SkillItem.objects.filter(skill__user_id=profile.pk)
+    clients = Client.objects.all()
+    no_of_clients = Client.objects.all().count()
+    completed_count = Project.objects.filter(is_completed=True).count()
+    pending_count = Project.objects.filter(is_completed=False).count()
+    satisfied_count = Project.objects.filter(is_satisfied=True).count()
     educations = Education.objects.all()
     experiences = Experience.objects.all()
-    services = Service.objects.all()
-    projects = Project.objects.all()
+    services = Service.objects.all()[:4]
+    categories = Category.objects.all()
     testimonials = Testimonial.objects.all()
+
+    if category:
+        projects = Project.objects.filter(category__name=category)
+    else:
+        projects = Project.objects.all()[:6]
 
     context = {
         "profile" : profile,
@@ -27,6 +38,13 @@ def index(request):
         "skill_items" : skill_items,
         "projects" : projects,
         "testimonials" : testimonials,
+        "clients" : clients,
+        "no_of_clients" : no_of_clients,
+        "completed_count" : completed_count,
+        "pending_count" : pending_count,
+        "satisfied_count" : satisfied_count,
+        "categories" : categories,
+        "category" : category
     }
 
 

@@ -75,7 +75,7 @@ class SkillItem(models.Model):
         return self.item
 
 
-class Clients(models.Model):
+class Client(models.Model):
     name =  models.CharField(max_length=255)
     image = models.FileField(upload_to="service/")
     designation = models.CharField(max_length=255)

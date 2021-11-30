@@ -143,46 +143,26 @@
                 <h4>service</h4>
                 <h1>What can i do?</h1>
                 <ul>
+                    {% for service in services %}
                     <li>
                         <div class="image-container">
-                            <img src="{% static 'images/paint-bucket.png' %}" alt="paint-bucket" />
+                            <img src="{{service.image.url}}" alt="{{service.title}}" />
                         </div>
-                        <h2>Web Design</h2>
-                        <p>There are many variations of passages of lorem ipsum available</p>
-                    </li>
-                    <li>
-                        <div class="image-container">
-                            <img src="{% static 'images/search.png' %}" alt="Search">
-                        </div>
-                        
-                        <h2>SEO</h2>
-                        <p>There are many variations of passages of lorem ipsum available</p>
-                    </li>
-                    <li>
-                        <div class="image-container">
-                            <img src="{% static 'images/uiux-design.png' %}" alt="uiux-design" />
-                        </div>
-                        <h2>UI/UX Design</h2>
-                        <p>There are many variations of passages of lorem ipsum available</p>
-                    </li>
-                    <li>
-                        <div class="image-container">
-                            <img src="{% static 'images/developer.png' %}" alt="Developer" />
-                        </div>
-                        <h2>Web Development</h2>
-                        <p>There are many variations of passages of lorem ipsum available</p>
-                    </li>
-                </ul>
+                        <h2>{{service.title}}</h2>
+                        <p>{{service.description}}</p>
+                    </li> 
+                    {% endfor %}              
+                 </ul>
             </section>
         </section>
         <section id="usercount">
             <section class="wrapper">
                 <div class="container">
                     <ul>
-                        <li><h3>768</h3><h5>clients</h5></li>
-                        <li><h3>230</h3><h5>Project complete</h5></li>
-                        <li><h3>97</h3><h5>Project Ongoing</h5></li>
-                        <li><h3>699</h3><h5>Client Satisfaction</h5></li>
+                        <li><h3>{{no_of_clients}}</h3><h5>clients</h5></li>
+                        <li><h3>{{completed_count}}</h3><h5>Project complete</h5></li>
+                        <li><h3>{{pending_count}}</h3><h5>Project Ongoing</h5></li>
+                        <li><h3>{{satisfied_count}}</h3><h5>Client Satisfaction</h5></li>
                     </ul>
                 </div>
             </section>
@@ -194,41 +174,13 @@
                         <h2>Portfolio</h2>
                         <h1>See my work</h1>
                         <ul>
+                            {% for category in categories %}
                             <li>
                                 <div class="border">
-                                    <h4>All</h4>
+                                    <a href="#">{{category.name}}</a>
                                 </div>
                             </li>
-                            <li>
-                                <div class="border">
-                                    <h4>Apps</h4>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="border">
-                                    <h4>Template</h4>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="border">
-                                    <h4>IOS</h4>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="border">
-                                    <h4>UI/UX</h4>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="border">
-                                    <h4>Graphic</h4>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="border">
-                                    <h4>Wireframes</h4>
-                                </div>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="bottom">
@@ -242,7 +194,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <div class="box">
                                     <img src="{% static 'images/work/work-2.jpg' %}" alt="work">
                                     <div class="text">
@@ -286,7 +238,7 @@
                                         <h5>- Games Streaming</h5>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                         <a href="" class="button">Load More</a>
                     </div>

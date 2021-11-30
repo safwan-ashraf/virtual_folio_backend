@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import Profile,Address,Education,Experience,Skill,SkillItem
+from users.models import Profile,Address,Education,Experience,Skill,SkillItem,Client
 
 
 # Register your models here.
@@ -9,4 +9,5 @@ admin.site.register(Education)
 admin.site.register(Experience)
 admin.site.register(Skill)
 admin.site.register(SkillItem)
+admin.site.register(Client)
 
