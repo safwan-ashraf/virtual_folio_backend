@@ -937,15 +937,12 @@ background: white;
 width: 28%;
 }
 #testimonial section.wrapper section.container div.items div.left div.box {
-	height: 319px;
-	width: 365px;
-	background: url(../images/testimonials/testimonials_1.jpg) no-repeat;
-	background-size: cover;
-	margin-right: 20px;
+	width: 90%; 
 	border-radius: 8px;
 } 
 #testimonial section.wrapper section.container div.items div.left div.box img{
 	width: 100%;
+	height:100%;
 	display: block;
 }
 #testimonial section.wrapper section.container div.items div.right{
@@ -964,16 +961,18 @@ width: 28%;
 	align-items: center;
 }
 #testimonial section.wrapper section.container div.items div.right div.set div.icon{
-	background: url(../images/testimonials/testimonials_1.jpg) no-repeat;
 	width: 76px;
 	height: 76px;
 	background-size: cover;
-	border-radius: 50%;
+	
 	margin-right: 20px;
 }
 #testimonial section.wrapper section.container div.items div.right div.set div.icon img{
-
-}
+	display:block;
+	width:100%;
+	height:100%;
+	border-radius: 50%;
+}	
 #testimonial section.wrapper section.container div.items div.right div.set div.name{
 
 }

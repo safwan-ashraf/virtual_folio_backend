@@ -13,7 +13,7 @@ def index(request):
     profile = Profile.objects.get(user_id=1)
     skills = Skill.objects.filter(user_id=profile.pk)
     skill_items = SkillItem.objects.filter(skill__user_id=profile.pk)
-    clients = Client.objects.all()
+    clients = Client.objects.all()[:1]
     no_of_clients = Client.objects.all().count()
     completed_count = Project.objects.filter(is_completed=True).count()
     pending_count = Project.objects.filter(is_completed=False).count()
@@ -25,7 +25,10 @@ def index(request):
     testimonials = Testimonial.objects.all()
 
     if category:
-        projects = Project.objects.filter(category__name=category)
+        if Project.objects.filter(category__name=category).exists():
+            projects = Project.objects.filter(category__name=category)[:6]
+        else:
+           projects = Project.objects.all()[:6] 
     else:
         projects = Project.objects.all()[:6]
 
@@ -50,3 +53,17 @@ def index(request):
 
     return render(request, "index.html",context = context)
 
+
+# def category(request):
+    # category = request.GET.get('category')
+
+    # if category:
+    #     projects = Project.objects.filter(category__name=category)
+    # else:
+    #     projects = Project.objects.all()[:6]
+
+    # context = {
+    #     "category" : category,
+    # }
+
+    # return render(request,"index.html",context=context)

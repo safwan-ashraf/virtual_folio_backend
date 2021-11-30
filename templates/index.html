@@ -177,7 +177,7 @@
                             {% for category in categories %}
                             <li>
                                 <div class="border">
-                                    <a href="#">{{category.name}}</a>
+                                    <a href="{% url 'web:index' %}?category={{category.name}}">{{category.name}}</a>
                                 </div>
                             </li>
                             {% endfor %}
@@ -185,60 +185,17 @@
                     </div>
                     <div class="bottom">
                         <ul>
+                            {% for project in projects %}
                             <li>
                                 <div class="box">
-                                    <img src="{% static 'images/work/work-1.jpg' %}" alt="work">
+                                    <img src="{{project.thumbnail.url}}" alt="work">
                                     <div class="text">
-                                        <h2>Mobile Travel App</h2>
-                                        <h5>- Travel, Discovery</h5>
+                                        <h2>{{project.title}}</h2>
+                                        <h5>- {{project.description}}</h5>
                                     </div>
                                 </div>
                             </li>
-                            <!-- <li>
-                                <div class="box">
-                                    <img src="{% static 'images/work/work-2.jpg' %}" alt="work">
-                                    <div class="text">
-                                        <h2>Music App</h2>
-                                        <h5>- Musics</h5>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="box">
-                                    <img src="{% static 'images/work/work-3.jpg' %}" alt="work">
-                                    <div class="text">
-                                        <h2>Gaming Dashboard</h2>
-                                        <h5>- GAmes, Streaming</h5>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="box">
-                                    <img src="{% static 'images/work/work-4.jpg' %}" alt="work">
-                                    <div class="text">
-                                        <h2>Drugs Delivery App</h2>
-                                        <h5>- Health, Drugs</h5>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="box">
-                                    <img src="{% static 'images/work/work-5.jpg' %}" alt="work">
-                                    <div class="text">
-                                        <h2>Musics Discover</h2>
-                                        <h5>- Musics, Dashboards</h5>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="box">
-                                    <img src="{% static 'images/work/work-6.jpg' %}" alt="work" />
-                                    <div class="text">
-                                        <h2>Game Streaming</h2>
-                                        <h5>- Games Streaming</h5>
-                                    </div>
-                                </div>
-                            </li> -->
+                            {% endfor %}
                         </ul>
                         <a href="" class="button">Load More</a>
                     </div>
@@ -249,23 +206,27 @@
             <section class="wrapper">
                 <section class="container">
                     <h1>What Clients are Saying</h1>
+                    {% for client in clients %}
                     <div class="items">
                         <div class="left">
                             <div class="box">
+                                <img src="{{client.image.url}}" alt="{{client.name}}" />
                             </div>
                         </div>
                         <div class="right">
-                            <p>Ther are many variations of passages available on lorum ipsum.But the majority have suffered</p>
+                            <p>{{client.description}}</p>
                             <div class="set">
                                 <div class="icon">
+                                    <img src="{{client.image.url}}" alt="image" />
                                 </div>
                                 <div class="name">
-                                    <h3>Satria Nugraha</h3>
-                                    <small>CEO Nutshell</small>
+                                    <h3>{{client.name}}</h3>
+                                    <small>{{client.designation}}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </section>
             </section>
         </section>

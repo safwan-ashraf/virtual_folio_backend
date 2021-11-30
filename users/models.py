@@ -79,6 +79,7 @@ class Client(models.Model):
     name =  models.CharField(max_length=255)
     image = models.FileField(upload_to="service/")
     designation = models.CharField(max_length=255)
+    description = models.TextField(default="Rewrite Here")
 
     def __str__(self):
         return self.name
