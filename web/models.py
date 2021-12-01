@@ -7,9 +7,8 @@ class Testimonial(models.Model):
     client = models.ForeignKey("users.Client",on_delete=models.CASCADE,blank=True,null=True)
     message = models.TextField()
 
-
     def __str__(self):
-        return self.id
+        return self.message
 
 
 

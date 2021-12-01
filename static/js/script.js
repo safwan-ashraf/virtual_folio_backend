@@ -1,13 +1,36 @@
-// $(document).ready(function () {
-//     $("#portfolio ul li h4").on("click", function () {
-//         var $this = $(this);
-//         // $("#faq .bottom ul li h4").removeClass("active");
-//         let clicked_tab = $this.text();
-//         console.log(clicked_tab);
-//         // $this.addClass("active");
-//         // let clicked_tab = $this.data("id");
-//         // $("#faq .tab_body div.item").removeClass("active");
-//         // $(`#${clicked_tab}`).addClass("active");
-//     });
-// }
+$(document).on("submit", "form.ajax", function (e) {
+    e.preventDefault();
+    var $this = $(this);
+
+    var url = $this.attr("action");
+    var method = $this.attr("method");
+
+    jQuery.ajax({
+        type: method,
+        url: url,
+        dataType: "json",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+            var title = data["title"]
+            var message = data["message"]
+            var status = data["status"]
+
+            Swal.fire({
+                icon: status,
+                title: title,
+                text: message,
+            });
+
+            if (status == "success"){
+                $this.trigger("reset");
+            }
+        },
+        error: function (error) {
+            console.log("error");
+        },
+    });
+});
 
