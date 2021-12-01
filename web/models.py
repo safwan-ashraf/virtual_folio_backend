@@ -7,6 +7,11 @@ class Testimonial(models.Model):
     client = models.ForeignKey("users.Client",on_delete=models.CASCADE,blank=True,null=True)
     message = models.TextField()
 
+    class Meta:
+        db_table = "web_testimonial"
+        ordering = ["-id"]
+
+
     def __str__(self):
         return self.message
 
@@ -29,5 +34,9 @@ class Contact(models.Model):
 class Subscribe(models.Model):
     email = models.EmailField()
 
+    class Meta:
+        db_table = "web_subscribe"
+        ordering = ["-id"]
+
     def __str__(self):
-     return self.email
+        return self.email

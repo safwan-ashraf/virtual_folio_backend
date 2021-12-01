@@ -6,7 +6,7 @@ from django.http.response import HttpResponse
 from users.models import Profile,Address,Education,Experience,Skill,SkillItem,Client
 from web.models import Subscribe,Testimonial,Contact
 from works.models import Service, Project, Category
-from web.forms import ContactForm
+from web.forms import ContactForm,SubscribeForm
 
 
 # Create your views here.
@@ -25,7 +25,8 @@ def index(request):
     services = Service.objects.all()[:4]
     categories = Category.objects.all()
     testimonials = Testimonial.objects.all()[:1]
-    form = ContactForm()
+    form_c = ContactForm()
+    form_s = SubscribeForm()
 
     if category:
         if Project.objects.filter(category__name=category).exists():
@@ -51,7 +52,8 @@ def index(request):
         "satisfied_count" : satisfied_count,
         "categories" : categories,
         "category" : category,
-        "form": form
+        "form_c": form_c,
+        "form_s": form_s
     }
 
 
@@ -63,6 +65,33 @@ def contact(request):
     email = request.POST.get("email")
     if form.is_valid():
         if not Contact.objects.filter(email=email).exists():
+            form.save()
+            response_data = {
+                "status" : "success",
+                "title" : "Successfully registered",
+                "message" : "You subscribed to our newsletter successfully."
+            }
+        else:
+            response_data = {
+            "status" : "error",
+            "title" : "You are already subscribed",
+            "message" : "Already subscribed"
+        }
+    else:
+        response_data = {
+            "status" : "error",
+            "title" : "You are already subscribed",
+            "message" : "Already subscribed"
+        }
+    
+    return HttpResponse(json.dumps(response_data),content_type="application/javascript")
+
+
+def subscribe(request):
+    form = SubscribeForm(request.POST)
+    email = request.POST.get("email")
+    if form.is_valid():
+        if not Subscribe.objects.filter(email=email).exists():
             form.save()
             response_data = {
                 "status" : "success",

@@ -327,10 +327,10 @@
                     <div class="right">
                         <form action="{% url 'web:contact' %}" method="post" class="ajax">
                             {% csrf_token %}
-                            {{form.name}}
-                            {{form.email}}
-                            {{form.subject}}
-                            {{form.message}}
+                            {{form_c.name}}
+                            {{form_c.email}}
+                            {{form_c.subject}}
+                            {{form_c.message}}
                             <input type="submit" value="Send Message" />
                         </form>
                     </div>
@@ -363,8 +363,9 @@
                 </div>
                 <div class="bottom">
                     <h3>Subscribe</h3>
-                    <form action="">
-                        <input type="email" placeholder="Email address">
+                    <form action="{% url 'web:subscribe' %}" method="post" class="ajax">
+                        {% csrf_token %}
+                        {{form_s.email}}
                         <input type="submit" value="Subscribe">
                     </form>
                     <small>Copyright &copy;2020.All right reserved | This template is made by <span> &#9825; </span> <a href="#">MAcode ID</a></small>
