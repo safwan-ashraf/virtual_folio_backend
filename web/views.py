@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import render
 from django.conf import settings
-from django.http import response
+from django.http import response,JsonResponse
 from django.http.response import HttpResponse
 from users.models import Profile,Address,Education,Experience,Skill,SkillItem,Client
 from web.models import Subscribe,Testimonial,Contact
@@ -11,9 +11,9 @@ from web.forms import ContactForm,SubscribeForm
 
 # Create your views here.
 def index(request):
-    category = request.GET.get('category')
     profile = Profile.objects.get(user_id=1)
     skills = Skill.objects.filter(user_id=profile.pk)
+    address = Address.objects.all()
     skill_items = SkillItem.objects.filter(skill__user_id=profile.pk)
     clients = Client.objects.all()
     no_of_clients = Client.objects.all().count()
@@ -24,17 +24,10 @@ def index(request):
     experiences = Experience.objects.all()
     services = Service.objects.all()[:4]
     categories = Category.objects.all()
+    projects = Project.objects.all()[:6]
     testimonials = Testimonial.objects.all()[:1]
     form_c = ContactForm()
     form_s = SubscribeForm()
-
-    if category:
-        if Project.objects.filter(category__name=category).exists():
-            projects = Project.objects.filter(category__name=category)[:6]
-        else:
-           projects = Project.objects.all()[:6] 
-    else:
-        projects = Project.objects.all()[:6]
 
     context = {
         "profile" : profile,
@@ -53,9 +46,9 @@ def index(request):
         "categories" : categories,
         "category" : category,
         "form_c": form_c,
-        "form_s": form_s
+        "form_s": form_s,
+        "MEDIA_URL" : settings.MEDIA_URL,
     }
-
 
     return render(request, "index.html",context = context)
 
@@ -112,3 +105,44 @@ def subscribe(request):
         }
     
     return HttpResponse(json.dumps(response_data),content_type="application/javascript")
+
+
+def category(request):
+    category_name =request.GET.get('category')
+    if category_name:
+
+        if category_name == "All":
+
+            projects = Project.objects.all().values()
+            data = list(projects)  
+            response_data = {
+                "title" : "success",
+                "data" : data,
+            }
+        elif Category.objects.filter(name=category_name).exists():
+            if Project.objects.filter(category__name=category_name).exists():
+                projects = Project.objects.filter(category__name=category_name).values()
+                data = list(projects)  
+
+                response_data = {
+                    "title" : "success",
+                    "data" : data,
+                }
+            else:
+                response_data = {
+                    "title" : "failed",
+                    "message" : "projects not found",
+                }
+        else:
+            response_data = {
+                "title" : "failed",
+                "message" : "Category not found",
+            }
+    else:
+        response_data = {
+            "title" : "failed",
+            "message" : "Category not found",
+        }
+
+    return JsonResponse({'response_data': response_data})
+
